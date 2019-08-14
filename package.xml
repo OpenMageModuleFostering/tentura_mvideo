@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<package>
+    <name>Tentura_Mvideo</name>
+    <version>0.1.0</version>
+    <stability>stable</stability>
+    <license uri="http://www.opensource.org/licenses/gpl-license.php">GNU General Public License (GPL)</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>Extension for upload videos to Youtube directly from your Magento Shop</summary>
+    <description>Extension for upload videos to Youtube directly from your Magento Shop&#xD;
+&#xD;
+Main features&#xD;
+* Directly upload videos on Youtube from Magento shop. &#xD;
+* Insert Youtube video by Youtube key&#xD;
+* Insert custom video HTML (embed tags)&#xD;
+* Use previously uploaded videos&#xD;
+* Upload video on your web hosting, convert it to *.flv format and display with nice FLW player.&#xD;
+&#xD;
+Using a one string of code, you can add video to any place of product page, and not just:&#xD;
+&lt;?php echo Mage::helper('mvideo')-&gt;getVideoHtml($_product-&gt;getId());?&gt;</description>
+    <notes>Extension for upload videos to Youtube directly from your Magento Shop&#xD;
+&#xD;
+Main features&#xD;
+* Directly upload videos on Youtube from Magento shop. &#xD;
+* Insert Youtube video by Youtube key&#xD;
+* Insert custom video HTML (embed tags)&#xD;
+* Use previously uploaded videos&#xD;
+* Upload video on your web hosting, convert it to *.flv format and display with nice FLW player.&#xD;
+&#xD;
+Using a one string of code, you can add video to any place of product page, and not just:&#xD;
+&lt;?php echo Mage::helper('mvideo')-&gt;getVideoHtml($_product-&gt;getId());?&gt;</notes>
+    <authors><author><name>Tentura Team</name><user>tentura</user><email>info@tentura.eu</email></author></authors>
+    <date>2012-12-01</date>
+    <time>02:37:22</time>
+    <contents><target name="magelocal"><dir name="Tentura"><dir name="Mvideo"><dir name="Block"><dir name="Adminhtml"><dir name="Catalog"><dir name="Product"><dir name="Edit"><dir name="Action"><dir name="Attribute"><dir name="Tab"><file name="Attributes.php" hash="b945d32c89e7259e321b6166f0cfda9b"/></dir></dir></dir></dir></dir></dir></dir></dir><dir name="Helper"><file name="Data.php" hash="bac7d13adc14bab694a5247e03f041df"/></dir><dir name="Model"><file name="Lang.php" hash="122a64dc148fcb78fa8764ae8c25e0ac"/><file name="Mvideo.php" hash="cb59749eeeda09bc0b9a802dfeffef83"/><file name="MvideoForProducts.php" hash="74d2032015b08d725ff8f33d37ea691f"/><dir name="Mysql4"><dir name="Mvideo"><file name="Collection.php" hash="208c601a6035358641aa477ecb9a4389"/></dir><file name="Mvideo.php" hash="424b0c1b509aa531c83ba09aecd7236c"/><dir name="MvideoForProducts"><file name="Collection.php" hash="2354cc9739b5003b0787ee4c5d1d238c"/></dir><file name="MvideoForProducts.php" hash="51179cda1deea8bf4e2dd78b215ec500"/></dir><file name="Observer.php" hash="d14bf716a841585367b6331764082a38"/><file name="Status.php" hash="5b6247bd570f73e991cda60beab7f7b8"/></dir><dir name="controllers"><dir name="Adminhtml"><dir name="Catalog"><file name="ProductController.php" hash="cd8a060d598bc5d293eb5f17ac78be0c"/></dir><file name="MvideoController.php" hash="0d330629f935a3273c4cb48f95f844e7"/></dir></dir><dir name="etc"><file name="config.xml" hash="d5c8ccc71eb1b42f95e1acd7452f6388"/><file name="system.xml" hash="2bf1b91255e50972b8a41f6439390947"/></dir><dir name="sql"><dir name="mvideo_setup"><file name="mysql4-install-0.1.0.php" hash="c4f4eac995fa0404bc168f56c191814a"/></dir><file name=".DS_Store" hash="7758c840a3caf8bf0047ee4c2d8fef91"/></dir><file name=".DS_Store" hash="bc4bd711acf6f51eb916d5b24b019a58"/></dir></dir></target><target name="magedesign"><dir name="adminhtml"><dir name="default"><dir name="default"><dir name="layout"><file name="mvideo.xml" hash="a6b843dce1e6d0349373527ae41de171"/></dir><dir name="template"><dir name="mvideo"><file name="coming.phtml" hash="a85aa9f654f00f8ac1583bc7fcca6cf7"/><file name="upload.phtml" hash="364248fde9247e0d0cd90bd6923b6071"/></dir></dir></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="Tentura_Mvideo.xml" hash="f275d3e8cfbcf8168e365a58f788651a"/></dir></target><target name="mageweb"><dir name="js"><file name="flowplayer-3.1.3.swf" hash="956808b1fa1c2d399514e07a34542a1a"/><file name="flowplayer-3.1.4.min.js" hash="7e9498111e106b20c032ee2c84ef7fe7"/><file name="flowplayer.controls-3.1.3.swf" hash="0e88f2ed2b1ec37d3259a1d20ae0f5c7"/></dir></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>5.2.13</min><max>5.4.9</max></php></required></dependencies>
+</package>

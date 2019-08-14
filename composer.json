@@ -1,0 +1,16 @@
+{
+    "name": "OpenMageModuleFostering/Tentura_Mvideo",
+    "type": "magento-module",
+    "license": "GNU-General-Public-License-(GPL)",
+    "homepage": "",
+    "description": "Extension for upload videos to Youtube directly from your Magento Shop",
+    "authors": [
+    {
+        "name": "Tentura Team",
+        "email": "info@tentura.eu"
+    }
+],
+    "suggest": {
+        "magento-hackathon/magento-composer-installer": "*"
+    }
+}

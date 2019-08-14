@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Tentura_Mvideo>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Tentura_Mvideo>
+    </modules>
+</config> 

@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <mvideo_adminhtml_mvideo_index>
+        <reference name="content">
+            <block type="mvideo/adminhtml_mvideo" name="mvideo" />
+        </reference>
+    </mvideo_adminhtml_mvideo_index>
+    <adminhtml_catalog_product_new>
+        <reference name="product_tabs">
+            <block type="mvideo/adminhtml_catalog_product_edit_action_attribute_tab_attributes" name="tab_attributes" template='mvideo/upload.phtml'/>
+            <action method="addTab"><name>attributes</name><block>tab_attributes</block></action>
+        </reference>
+    </adminhtml_catalog_product_new>
+    <adminhtml_catalog_product_edit>
+        <reference name="product_tabs">
+            <block type="mvideo/adminhtml_catalog_product_edit_action_attribute_tab_attributes" name="tab_attributes" template='mvideo/upload.phtml'/>
+            <action method="addTab"><name>attributes</name><block>tab_attributes</block></action>
+        </reference>
+    </adminhtml_catalog_product_edit>
+     <mvideo_catalog_product_index>
+      <update handle="catalog_product_index"/>
+      </mvideo_catalog_product_index>
+	<mvideo_index>
+            <block type="mvideo/mvideo" name="mvideo" />
+    </mvideo_index>
+</layout>

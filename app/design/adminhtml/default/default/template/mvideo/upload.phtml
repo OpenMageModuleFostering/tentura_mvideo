@@ -1,0 +1,332 @@
+<script src="<?php echo $this->getJsUrl();?>flowplayer-3.1.4.min.js"></script>
+
+
+<script>
+function upload()
+{
+	$('upload').style.display='';
+	$('key').style.display='none';
+	$('html').style.display='none';
+    $('related').style.display='none';
+    $('direct').style.display='none';
+    $('upload_result').innerHTML = "";
+
+}
+function key()
+{
+	$('upload').style.display='none';
+	$('key').style.display='';
+	$('html').style.display='none';
+    $('related').style.display='none';
+    $('direct').style.display='none';
+    $('upload_result').innerHTML = "";
+}
+function html()
+{
+	$('upload').style.display='none';
+	$('key').style.display='none';
+	$('html').style.display='';
+    $('related').style.display='none';
+    $('direct').style.display='none';
+    $('upload_result').innerHTML = "";
+}
+function related()
+{
+	$('upload').style.display='none';
+	$('key').style.display='none';
+	$('html').style.display='none';
+    $('related').style.display='';
+    $('direct').style.display='none';
+    $('upload_result').innerHTML = "";
+}
+function directUpload()
+{
+	$('upload').style.display='none';
+	$('key').style.display='none';
+	$('html').style.display='none';
+    $('related').style.display='none';
+    $('direct').style.display='';
+    $('upload_result').innerHTML = "";
+
+}
+
+function video_result(a, error_type)
+{
+	//$('upload_result').innerHTML='<object width="425" height="344"><param name="movie" value="http://www.youtube.com/v/'+a+'=ru&fs=1&"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/'+a+'&hl=ru&fs=1&" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="425" height="344"></embed></object>';
+    if (error_type == "error")
+        $('upload_result').innerHTML='<div id="messages"><ul class="messages"><li class="error-msg"><ul><li>'+a+'</li></ul></li></ul></div>';
+    else
+        $('upload_result').innerHTML='<div id="messages"><ul class="messages"><li class="success-msg"><ul><li>'+a+'</li></ul></li></ul></div>';
+
+    //alert("asd");
+}
+function status_get()
+{
+	url = '<?php echo $this->getUrl('mvideo/adminhtml_mvideo/checkStatus'); ?>';
+	new Ajax.Request(url, {
+	  method: 'post',
+	  onSuccess: function(transport) {
+	        $('status_answer').innerHTML = "";
+	  		$('status_answer').innerHTML = transport.responseText;
+	  		
+	  }});
+	
+}
+function backform()
+{
+    
+    $('upload_div').style.display="";
+    $('upload_div1').style.display="none";
+
+}
+function sendVideoInfo()
+{
+    url = '<?php echo $this->getUrl('mvideo/adminhtml_mvideo/getForm'); ?>';
+	new Ajax.Request(url, {
+	  method: 'post',
+	  parameters: $('videoInfo').serialize(),
+	  onSuccess: function(transport, json) {
+          var data = transport.responseText.evalJSON(true);
+          if (data['error'] == false){
+              $('upload_form_id').action = data['action'];
+              $('token').value = data['tokenValue'];
+
+              $('upload_div1').style.display = "";
+              $('upload_div').style.display="none";
+              $('warning_upload').style.display="none";
+          }
+          else{
+//              alert(data['mvideo_error']);
+              if (data['mvideo_error']!="")
+              $('warning_upload').innerHTML=data['mvideo_error'];
+              $('warning_upload').style.display="";
+              
+
+            }
+
+
+        }
+	  });
+}
+function del_video(id){
+    url = '<?php echo $this->getUrl('mvideo/adminhtml_mvideo/delVideo');?>id/'+id;
+	new Ajax.Request(url, {
+	  method: 'post',
+	  parameters: $('videoInfo').serialize(),
+	  onSuccess: function(transport, json) {
+          if (transport.responseText == 'success'){
+
+               $('div_video_'+id).style.display='none';
+
+          }
+
+        }
+	  });
+}
+</script>
+
+<?php
+if (sizeof($this->editInfo) > 0){
+?>
+<div class="entry-edit">
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo Mage::helper('mvideo')->__('Videos for this product');?></h4>
+    </div>
+    <fieldset id="grop_fields">
+       <div>
+       <?php
+       foreach ($this->editInfo['items'] as $video){
+           echo "<div id='div_video_".$video['id']."'>";
+           if ($video['video_type'] == '1' || $video['video_type'] == '2' || $video['video_type'] == '4'){
+           ?>
+           <object width="350" height="283"><param name="movie" value="http://www.youtube.com/v/<?php echo $video['mvideo_code']?>&fs=1&"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/<?php echo $video['mvideo_code']?>&fs=1&" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="350" height="283"></embed></object>
+           <?php
+           }
+           if ($video['video_type'] == '3'){
+           ?>
+           <?php echo $video['html_text']?>
+           <?php
+           }
+           if ($video['video_type'] == '5'){
+           ?>
+           <a
+                href="<?php echo str_replace("index.php", "", str_replace("index.php/", "", $this->getBaseUrl()))."media/video/".$video['file_name']?>"
+                style="display:block;width:350px;height:283px;"
+                id="player">
+           </a>
+           
+           <script language="JavaScript">
+                flowplayer("player", "<?php echo $this->getJsUrl();?>flowplayer-3.1.3.swf");
+           </script>
+            <?php
+           }
+           echo "<br><center><button class='scalable' type='button' onclick='del_video(\"".$video['id']."\")'><span>Delete file</span></button></center><br><br></div>";
+       }
+       ?>
+       </div>
+        </fieldset>
+</div>
+<?php } ?>
+<div class="entry-edit">
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo Mage::helper('mvideo')->__('Product In Websites');?></h4>
+    </div>
+    <fieldset id="grop_fields">
+       <div>
+        <table>
+			<tr><td><input type='radio' name='video_type' value='1' onclick="upload()" checked></td><td>&nbsp;&nbsp;<?php echo Mage::helper('mvideo')->__('Upload Video to Youtube');?></td></tr>
+			<tr><td><input type='radio' name='video_type' value='2' onclick="key()"></td><td>&nbsp;&nbsp;<?php echo Mage::helper('mvideo')->__('Use Youtube Video Key');?></td></tr>
+			<tr><td><input type='radio' name='video_type' value='3' onclick="html()"></td><td>&nbsp;&nbsp;<?php echo Mage::helper('mvideo')->__('Insert Html');?></td></tr>
+			<tr><td><input type='radio' name='video_type' value='4' onclick="related()"></td><td>&nbsp;&nbsp;<?php echo Mage::helper('mvideo')->__('Early uploaded Youtube video');?></td></tr>
+   			<tr><td><input type='radio' name='video_type' value='5' onclick="directUpload()"></td><td>&nbsp;&nbsp;<?php echo Mage::helper('mvideo')->__('Upload video on your site');?></td></tr>
+
+        </table>
+        <br>
+		<span id='upload_result'></span>
+        
+        <div id='upload'>
+		<?php
+		if(isset($_SESSION['mvideo_id1'])){
+			echo "Currently upload video Id - <b>".$_SESSION['mvideo_id']."</b>";
+		?>	
+		<span id='status_answer'><?php //echo $this->checkStatusAction()?></span><img onclick='status_get()' src='<?php echo $this->getSkinUrl()?>/ico-refresh.gif'>
+		<?php
+		}
+		?>
+
+<div >
+    <div id="warning_upload"  style="clear:both;
+font-size:0.95em;
+font-weight:bold;
+line-height:1.25em;
+margin:3px 0 0 0px;
+min-height:15px;
+color:#D40707;
+font-weight:bold;
+display:none;
+"><?php echo Mage::helper('mvideo')->__('Wrong title or description');?></div>
+</div>
+<div id='upload_div1' style="display:none">
+                    <button class="scalable save" type="button" onclick='backform()'><span><?php echo Mage::helper('mvideo')->__('Back');?></span></button>
+                    <form id="upload_form_id" target="upload_frame" action="" method="post" enctype="multipart/form-data">
+                    <input name="file" type="file"/>
+                    <input id='token' name="token" type="hidden" value=""/>
+                    <button class="scalable save" type="submit" ><span><?php echo Mage::helper('mvideo')->__('Upload Video File');?></span></button>
+                    </form>
+</div>
+
+<div id='upload_div'>
+    <form id='videoInfo' >
+        <table cellspacing="0" class="form-list">
+            <tbody>
+                <tr>
+                    <td class="label"><label for="title"><?php echo Mage::helper('mvideo')->__('Title');?> <span class="required">*</span></label></td>
+                    <td class="value"><input type="text" class="input-text" value="" name="title" id="title"/></td>
+                    <td class="scope-label"></td>
+                    <td><small> </small></td>
+                </tr>
+                <tr>
+                    <td class="label"><label for="description"><?php echo Mage::helper('mvideo')->__('Description');?> <span class="required">*</span></label></td>
+                    <td class="value"><input type="text" class="input-text" value="" name="description" id="description"/></td>
+                    <td class="scope-label"></td>
+                        <td><small> </small></td>
+                </tr>
+                <tr>
+                    <td class="label"><label for="weight"><?php echo Mage::helper('mvideo')->__('Category');?> </label></td>
+                    <td class="value"><?php echo $this->getCategoryList(); ?></td>
+                    <td class="scope-label"></td>
+                        <td><small> </small></td>
+                </tr>
+            </tbody>
+        </table>
+
+    <button type='button' class='scalable save' onclick='sendVideoInfo()'><?php echo Mage::helper('mvideo')->__('Next');?></button>
+    </form>
+</div>
+		
+		
+		<iframe style='display:none' name='upload_frame'></iframe>
+        <iframe style='display:none' name='direct_upload_frame'></iframe>
+		</div>
+		<div id='key' style="display:none">
+         <table cellspacing="0" class="form-list">
+            <tbody>
+                <tr>
+                    <td class="label">
+                    <?php echo Mage::helper('mvideo')->__('Youtube video key');?>:
+                        
+                    </td>
+                    <td class="value">
+                        <input type='text' name='key_text' class='input-text' style='width:300px'>
+                    </td>
+                </tr>
+             </tbody>
+         </table>
+        </div>
+		<div id='html' style="display:none;">
+        <table cellspacing="0" class="form-list">
+            <tbody>
+                <tr>
+                    <td class="label">
+                    <?php echo Mage::helper('mvideo')->__('HTML code for video');?>:
+                        
+                    </td>
+                    <td class="value">
+                        <input type='text' name='html_text' style='width:300px' class='input-text'>
+                    </td>
+                </tr>
+             </tbody>
+         </table>
+		
+		</div>
+        <div id='related' style="display:none;">
+        <table cellspacing="0" class="form-list">
+            <tbody>
+                <tr>
+                    <td class="label">
+                    <?php echo Mage::helper('mvideo')->__('Early uploaded');?>:
+                        
+                    </td>
+                    <td class="value">
+                        <select id='already_uploaded' name='already_uploaded' style='width:300px'>
+                            <option value='0'></option>
+                            <?php
+                            //var_dump($videos);
+                            //sort($this->videos['items']);
+                            foreach ($this->videos['items'] as $video){
+                                echo "<option value='".$video['key']."'>".$video['title']."</option>";
+                            }
+
+                            ?>
+                        </select>
+                    </td>
+                </tr>
+             </tbody>
+         </table>
+		
+		</div>
+        
+        <div style='display:none' id='direct'>
+        <form id='direct_form' target='direct_upload_frame'  action="<?php echo $this->getUrl('mvideo/adminhtml_mvideo/directUpload'); ?>" method="post" enctype="multipart/form-data">
+        <input name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+        
+        <table cellspacing="0" class="form-list">
+            <tbody>
+                <tr>
+                    <td class="label" valign='middle'>
+                        <span style="display:block; margin-top:4px"><?php echo Mage::helper('mvideo')->__('Select video file');?>:</span>
+                    </td>
+                    <td class="value">
+                        <input name="filename" type="file"/>
+                    </td>
+                    <td valign='middle'>
+                        <button class="scalable save" type="submit" style="float:left; margin-top:4px"><span><?php echo Mage::helper('mvideo')->__('Upload File');?></span></button>
+                   </td>
+                </tr>
+             </tbody>
+         </table>
+         </form>
+        </div>
+    </div>
+        </fieldset>
+</div>
